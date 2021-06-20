@@ -1,35 +1,39 @@
 <#
-Import-Module vmware.vimautomation.core
+Usar o Powershell ISE
+Instalar Vmware.PowerCLI caso não esteja instalado em seu PC 
 install-module vmware.powercli
 #>
 
-# Credenciais
+#Importar Modulo
+Import-Module vmware.vimautomation.core
 
-$vcserver = "bnsvher249.hering.local"
+# Credenciais
+$vcserver = ""
 $vcuser = ""
 $vcpassword = ""
 
+# Conectar VCenter
 Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false
 Connect-VIServer -server $vcserver -protocol https -user $vcuser -password $vcpassword
 
+# Lista de servidores em arquivo texto
+$vms = Get-Content -Path "C:\temp\updates\gmud-prod-1.txt"
 
-$vms = Get-Content -Path "C:\temp\ciahering\updates\gmud-prod-1.txt"
-
+<#
 # Take Snapshots
-
 foreach($vm in $vms){
     $snapname = $vm + "-snapshot-12-06"
 
     New-Snapshot -vm $vm -Name $snapname -Confirm:$false -Memory:$true -RunAsync:$true
-
 }
+#>
 
+<#
 # Remove Snapshots
 foreach($vm in $vms){
     $snapname = $vm + "-snapshot-12-06"
     $snap = Get-Snapshot -vm $vm -Name $snapname
 
     Remove-Snapshot -Snapshot $snap -Confirm:$false -RunAsync:$true
-    
-
 }
+#>
