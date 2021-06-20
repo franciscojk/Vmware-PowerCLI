@@ -29,7 +29,7 @@ foreach($vm in $vms){
     $snapname = $vm + "-snapshot-12-06"
     $snap = Get-Snapshot -vm $vm -Name $snapname
 
-    Remove-Snapshot -Snapshot $snap -Confirm:$false
+    Remove-Snapshot -Snapshot $snap -Confirm:$false -RunAsync:$true
     
 
 }
